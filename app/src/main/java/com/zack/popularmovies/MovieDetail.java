@@ -33,7 +33,7 @@ public class MovieDetail extends AppCompatActivity {
         imageUrl = imageBase + imagePath;
         getSupportActionBar().setTitle(title);
         Picasso.get().load(imageUrl)
-                .networkPolicy(NetworkPolicy.OFFLINE)
+                .networkPolicy(NetworkPolicy.NO_CACHE)
                 .fit()
                 .into(binding.moviePoster);
         binding.rating.setText(rating);
