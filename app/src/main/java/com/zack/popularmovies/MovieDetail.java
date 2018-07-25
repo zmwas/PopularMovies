@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.zack.popularmovies.data.PopularMovie;
 import com.zack.popularmovies.databinding.MovieDetailBinding;
@@ -31,7 +32,10 @@ public class MovieDetail extends AppCompatActivity {
         imagePath = movie.getPosterPath();
         imageUrl = imageBase + imagePath;
         getSupportActionBar().setTitle(title);
-        Picasso.get().load(imageUrl).fit().into(binding.moviePoster);
+        Picasso.get().load(imageUrl)
+                .networkPolicy(NetworkPolicy.OFFLINE)
+                .fit()
+                .into(binding.moviePoster);
         binding.rating.setText(rating);
         binding.movieOverview.setText(overview);
         binding.share.setOnClickListener(view -> {

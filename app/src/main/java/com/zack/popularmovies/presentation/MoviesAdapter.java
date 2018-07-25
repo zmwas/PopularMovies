@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.*;
 
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.zack.popularmovies.R;
 import com.zack.popularmovies.data.PopularMovie;
@@ -63,7 +64,10 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieItemV
             String imageBase = "http://image.tmdb.org/t/p/w185//";
             String imagePath = imageBase + movie.getPosterPath();
             binding.titleText.setText(movie.getTitle());
-            Picasso.get().load(imagePath).fit().into(binding.movieImage);
+            Picasso.get().load(imagePath)
+                    .networkPolicy(NetworkPolicy.OFFLINE)
+                    .fit()
+                    .into(binding.movieImage);
         }
     }
 }

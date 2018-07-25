@@ -4,10 +4,8 @@ import android.app.Application;
 
 import com.zack.popularmovies.data.ApiModule;
 
-import dagger.android.DaggerApplication;
-
 /**
- * Created by zack on 7/25/18.
+ * Created by zack on 7/25/18
  */
 
 public class PopularMoviesApplication extends Application {

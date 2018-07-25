@@ -54,7 +54,7 @@ public class ApiModule {
             Request newRequest = chain.request().newBuilder().url(url).build();
             return chain.proceed(newRequest);
         };
-        int cacheSize = 10 * 1024 * 1024;
+        int cacheSize = 50 * 1024 * 1024;
 
         return new OkHttpClient.Builder()
                 .addInterceptor(authInterceptor)
