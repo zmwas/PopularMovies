@@ -41,8 +41,8 @@ public class MovieDetail extends AppCompatActivity {
         binding.share.setOnClickListener(view -> {
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_SEND);
-            intent.putExtra("title", title);
-            intent.putExtra("overview", overview);
+            intent.putExtra(Intent.EXTRA_TEXT, overview);
+            intent.setType("text/plain");
             startActivity(Intent.createChooser(intent, "share movie"));
         });
     }
