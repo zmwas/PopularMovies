@@ -2,6 +2,8 @@ package com.zack.popularmovies;
 
 import android.app.Application;
 
+import com.zack.popularmovies.data.ApiModule;
+
 import dagger.android.DaggerApplication;
 
 /**
@@ -15,7 +17,9 @@ public class PopularMoviesApplication extends Application {
     public void onCreate() {
 
         super.onCreate();
-        appComponent =  DaggerApplicationComponent.builder().app(this).build();
+        appComponent = DaggerApplicationComponent.builder()
+                .apiModule(new ApiModule(this))
+                .app(this).build();
     }
 
     public ApplicationComponent component() {

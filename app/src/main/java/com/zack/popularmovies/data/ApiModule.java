@@ -1,6 +1,10 @@
 package com.zack.popularmovies.data;
 
+import android.app.Application;
+import android.content.Context;
+
 import com.zack.popularmovies.BuildConfig;
+import com.zack.popularmovies.PopularMoviesApplication;
 
 import java.io.IOException;
 
@@ -8,6 +12,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.Cache;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -23,8 +28,21 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 @Module
 public class ApiModule {
-    @Provides @Singleton
-    OkHttpClient providesOkHttpClient(){
+    Application application;
+
+    public ApiModule(Application application) {
+        this.application = application;
+    }
+
+    @Provides
+    @Singleton
+    Application providesApplication() {
+        return  application;
+    }
+
+    @Provides
+    @Singleton
+    OkHttpClient providesOkHttpClient(Application application) {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
@@ -36,14 +54,18 @@ public class ApiModule {
             Request newRequest = chain.request().newBuilder().url(url).build();
             return chain.proceed(newRequest);
         };
+        int cacheSize = 10 * 1024 * 1024;
 
         return new OkHttpClient.Builder()
                 .addInterceptor(authInterceptor)
                 .addInterceptor(loggingInterceptor)
+                .cache(new Cache(application.getCacheDir(), cacheSize))
                 .build();
     }
-    @Provides @Singleton
-    Retrofit providesRetrofit(OkHttpClient client){
+
+    @Provides
+    @Singleton
+    Retrofit providesRetrofit(OkHttpClient client) {
         return new Retrofit.Builder()
                 .baseUrl("https://api.themoviedb.org")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -51,7 +73,9 @@ public class ApiModule {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
     }
-    @Provides @Singleton
+
+    @Provides
+    @Singleton
     ApiService apiService(Retrofit retrofit) {
         return retrofit.create(ApiService.class);
     }

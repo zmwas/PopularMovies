@@ -22,6 +22,7 @@ public interface ApplicationComponent {
     interface Builder {
         ApplicationComponent build();
 
+        Builder apiModule(ApiModule apiModule);
         @BindsInstance
         Builder app(PopularMoviesApplication application);
 
