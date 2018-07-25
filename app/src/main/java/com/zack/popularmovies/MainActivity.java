@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.zack.popularmovies.data.MovieResponse;
@@ -48,6 +49,12 @@ public class MainActivity extends AppCompatActivity implements MoviesView,Recycl
         moviesPresenter.attachView(this);
         moviesPresenter.getMovies();
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        moviesPresenter.onDestroy();
     }
 
     @Override

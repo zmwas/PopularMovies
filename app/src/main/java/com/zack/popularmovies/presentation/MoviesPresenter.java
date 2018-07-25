@@ -31,4 +31,10 @@ public class MoviesPresenter implements Presenter<MoviesView>{
     public void attachView(MoviesView view) {
         this.view = view;
     }
+
+    public void onDestroy(){
+        if(!disposable.isDisposed()){
+            disposable.dispose();
+        }
+    }
 }
